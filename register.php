@@ -22,3 +22,31 @@ if ($_POST["password"] !== $_POST["confirm-password"]) {
 
 $hashed_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
+// ======================== Import Connection ========================
+$mysqli = require  "db-connection.php";
+
+// ======================== POST TO SQL ==============================
+try {
+    $sql = "INSERT INTO user (name , email , password) 
+    VALUES( ? , ? , ? )";
+
+    $stmt = $mysqli->stmt_init();
+
+    if (!$stmt->prepare($sql)) {
+        die("SQL Error:" . $mysqli->error);
+    }
+
+    // assign variables into sql statment
+    $stmt->bind_param(
+        "sss",
+        $_POST["name"],
+        $_POST["email"],
+        $hashed_password
+    );
+
+    $stmt->execute();
+    echo"sign up successfull";
+} catch (Exception $e) {
+        die(" SQL ERROR:    " .  $e->getMessage() . " " . $e->getCode());
+}
+
