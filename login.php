@@ -13,7 +13,7 @@ try {
     $result = $mysqli->query($sql);
 
     $user = $result->fetch_assoc();
-
+    echo("Login successful");
     if($user === null){
         throw new Exception("User not found!" , 404);
     }

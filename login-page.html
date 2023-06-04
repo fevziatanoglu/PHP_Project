@@ -5,33 +5,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/style.css">
+
     <title>Php Auth</title>
 </head>
 
-<body style="background-color: black;">
+<body class="">
 
-    <form action="register.php" method="post">
 
-        <input type="text" placeholder="Nameeeee" id="name" name="name">
-        <input type="email" placeholder="Email" id="email" name="email">
-        <input type="password" placeholder="Password" id="password" name="password">
-        <input type="password" placeholder="Confirm Password" id="confirm-password" name="confirm-password">
+    <div class="login-container col-12  row d-flex  p-1">
 
-        <button>sign up</button>
+        <div class="slider  py-2 px-3">
 
-    </form>
+            <h1 class="mb-5 p-1">Welcome :)</h1>
 
-    <hr>
+            <p>If you have already an account</p>
+            <button class="btn slider-btn w-100"> <- LOGIN </button>
 
-    <form action="login.php" method="post">
+        </div>
 
-        <input type="email" placeholder="Email" id="email" name="email">
-        <input type="password" placeholder="Password" id="password" name="password">
-        <button>sign in</button>
+        <div class="col">
+            <form class="row py-2 px-3 gap-2 justify-content-center align-items-center  h-100" action="register.php"
+                method="post">
 
-    </form>
+                <input type="text" placeholder="Name" id="name" name="name">
+                <input type="email" placeholder="Email" id="email" name="email">
+                <input type="password" placeholder="Password" id="password" name="password">
+                <input type="password" placeholder="Confirm Password" id="confirm-password" name="confirm-password">
 
+                <button class="btn btn-primary">Sign Up</button>
+
+            </form>
+        </div>
+
+        <div class="col ">
+            <form class="row py-2 px-3 gap-2 justify-content-center align-items-center  h-100" action="login.php"
+                method="post">
+
+                <input type="email" placeholder="Email" id="email" name="email">
+                <input type="password" placeholder="Password" id="password" name="password">
+                <button class="btn btn-primary mt-5">Sign In</button>
+
+            </form>
+        </div>
+    </div>
 
 </body>
+
+<script>
+
+const slider = document.querySelector(".slider");
+const sliderBtn = document.querySelector(".slider-btn");
+
+let isSliderRight = true;
+
+sliderBtn.addEventListener("click", handleSlide);
+
+function handleSlide() {
+
+    if(isSliderRight){
+        sliderBtn.innerHTML = " Register ->";
+        slider.children[0].innerHTML = "Hello :)"
+        slider.children[1].innerHTML = "If you don't have an account"
+        isSliderRight = false;
+    }else{
+        slider.children[0].innerHTML = "Welcome "
+        slider.children[1].innerHTML = "If you already have an account"
+        sliderBtn.innerHTML = " <- Login ";
+        isSliderRight = true;
+    }
+
+    slider.classList.toggle("slider-left");
+}
+
+
+</script>
 
 </html>
