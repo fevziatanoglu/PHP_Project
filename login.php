@@ -17,12 +17,15 @@ try {
     if($user === null){
         // throw new Exception("User not found!" , 404);
         echo '<script>alert("User not found");</script>';
+        echo '<script>window.location.href = "login-page.html";</script>';
     }
 
     
 
     if(!password_verify($_POST["password"], $user["password"])){
-        throw new Exception("Wrong password!" , 1001);
+        // throw new Exception("Wrong password!" , 1001);
+        echo '<script>alert("Wrong Password");</script>';
+        echo '<script>window.location.href = "login-page.html";</script>';
     }
     
     
