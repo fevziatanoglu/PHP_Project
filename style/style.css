@@ -1,5 +1,6 @@
 .login-container {
 
+
     font-size: .7rem;
 
     z-index: 10;
@@ -26,7 +27,7 @@
 
     /* background: rgb(255,71,66);
     background: linear-gradient(90deg, rgba(255,71,66,1) 0%, rgba(255,94,94,1) 51%, rgba(255,71,66,1) 100%); */
-
+    
     color: white;
     background: #FF4742;
 
@@ -116,7 +117,7 @@ input::placeholder{
 
     .login-container {
 
-
+        
         height: 90vh;
         width: 80vw;
 
@@ -129,6 +130,7 @@ input::placeholder{
     }
 
     .slider {
+        /* display: none; */
         height: 50%;
         width: 100%;
 
@@ -138,5 +140,9 @@ input::placeholder{
         border-radius: 1rem;
     }
 
+    .slider-left{
+        transform: translate(-50%, -100%);
+        border-radius: 1rem 1rem 0 0;
+    }
 
 }

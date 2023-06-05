@@ -13,9 +13,10 @@ try {
     $result = $mysqli->query($sql);
 
     $user = $result->fetch_assoc();
-    echo("Login successful");
+
     if($user === null){
-        throw new Exception("User not found!" , 404);
+        // throw new Exception("User not found!" , 404);
+        echo '<script>alert("User not found");</script>';
     }
 
     
@@ -23,8 +24,17 @@ try {
     if(!password_verify($_POST["password"], $user["password"])){
         throw new Exception("Wrong password!" , 1001);
     }
+    
+    
+    echo '<script>alert("Login successfull");</script>';
+    session_start();
+    $_SESSION["user_id"] = $user["id"];
 
-    var_dump($user);
+    echo '<script>window.location.href = "index.php";</script>';
+    exit;
+    // var_dump($user);
 } catch (Exception $e) {
     die(" SQL ERROR:    " .  $e->getMessage() . " " . $e->getCode());
 }
+
+

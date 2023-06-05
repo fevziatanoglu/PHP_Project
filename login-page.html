@@ -16,12 +16,12 @@
 
     <div class="login-container col-12  row d-flex  p-1">
 
-        <div class="slider  py-2 px-3">
+        <div class="slider slider-left py-2 px-3">
 
-            <h1 class="mb-5 p-1">Welcome :)</h1>
+            <h1 class="mb-5 p-1">Hello :)</h1>
 
-            <p>If you have already an account</p>
-            <button class="btn slider-btn w-100"> <- LOGIN </button>
+            <p>If you don't have an account</p>
+            <button class="btn slider-btn w-100"> Register -> </button>
 
         </div>
 
@@ -58,7 +58,7 @@
 const slider = document.querySelector(".slider");
 const sliderBtn = document.querySelector(".slider-btn");
 
-let isSliderRight = true;
+let isSliderRight = false;
 
 sliderBtn.addEventListener("click", handleSlide);
 

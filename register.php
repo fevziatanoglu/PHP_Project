@@ -45,7 +45,11 @@ try {
     );
 
     $stmt->execute();
-    echo"sign up successfull";
+
+    echo '<script>alert("Sign up successfull , you can login your account!");</script>';
+  
+    echo '<script>window.location.href = "login-page.html";</script>';
+    exit;
 } catch (Exception $e) {
         die(" SQL ERROR:    " .  $e->getMessage() . " " . $e->getCode());
 }
