@@ -14,6 +14,31 @@ if (isset($_SESSION["user_id"])) {
     $user = $result->fetch_assoc();
 }
 
+$mysqli = require "db-connection.php";
+$posts = [];
+
+
+try {
+    $sql = "Select * from post ";
+        
+
+    $result = $mysqli->query($sql);
+
+
+    while ($post = $result->fetch_assoc()){
+        // print_r($post);
+        array_push($posts , $post);
+    }
+
+    print_r($posts);
+
+    
+    // exit;
+} catch (Exception $e) {
+    die(" SQL ERROR:    " .  $e->getMessage() . " " . $e->getCode());
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +55,6 @@ if (isset($_SESSION["user_id"])) {
 
 
     <?php if (isset($user)) : ?>
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand display fw-bold fs-2 text-primary px-2"> WELCOME <?= htmlspecialchars($user["name"])  ?></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
