@@ -30,7 +30,16 @@ try {
         array_push($posts , $post);
     }
 
-    print_r($posts);
+    $posts_html = `<div class="p-5" >`;
+
+    foreach ($posts as $post){
+        $posts_html .= "<div > $post[user_id] : $post[text]  </div>";
+    }
+
+    
+
+    $posts_html .= "</div>";
+    // print_r($posts);
 
     
     // exit;
@@ -54,7 +63,7 @@ try {
 <body>
 
 
-    <?php if (isset($user)) : ?>
+<?php if (isset($user)) : ?>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand display fw-bold fs-2 text-primary px-2"> WELCOME <?= htmlspecialchars($user["name"])  ?></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,6 +84,8 @@ try {
             </div>
         </nav>
 
+
+        <!-- POSTING FORM -->
         <div class="">
 
 
@@ -84,6 +95,13 @@ try {
                     <button type="submit" class="btn  col-1">Share</button>
                 </form>
             </div>
+
+        </div>
+
+        <!-- POSTS -->
+        <div class="d-flex flex-column bg-danger justify-content-center align-items-center fs-1 gap-5">
+
+        <?= ($posts_html)   ?>
 
         </div>
 
