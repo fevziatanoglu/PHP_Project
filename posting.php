@@ -4,7 +4,7 @@ session_start();
 
 
 try {
-    $sql_post = "INSERT INTO post (user_id ,text) VALUES ( ? , ?)";
+    $sql_post = "INSERT INTO post (user_id , text , user_name) VALUES ( ? , ? , ?)";
 
     $stmt_post = $mysqli->stmt_init();
     $stmt_post->prepare($sql_post);
@@ -15,10 +15,10 @@ try {
 
     // assign variables into sql statment
     $stmt_post->bind_param(
-        "ss",
+        "sss",
         $_SESSION["user_id"],
         $_POST["post"],
-
+        $_SESSION["user_name"]
     );
 
 

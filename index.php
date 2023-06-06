@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+// get user
 if (isset($_SESSION["user_id"])) {
 
     $mysqli = require  "db-connection.php";
@@ -18,31 +18,52 @@ $mysqli = require "db-connection.php";
 $posts = [];
 
 
+
+$isShowProfile = false;
+
+
+
+// Check if the action parameter is set and execute the function
+if (isset($_GET['action']) && $_GET['action'] === 'profile') {
+    global $isShowProfile;
+    $isShowProfile = true;
+}
+
+
+// fetch all posts
 try {
-    $sql = "Select * from post ";
+
+    $sql = "";
+
+    if ($isShowProfile) {
         
+        $sql = sprintf(
+            "Select * from post where user_id = %s ORDER BY id DESC",
+            $mysqli->real_escape_string($_SESSION["user_id"])
+        );
+    } else {
+        $sql =   "Select * from post ORDER BY id DESC";
+    }
+
+
+
 
     $result = $mysqli->query($sql);
 
 
-    while ($post = $result->fetch_assoc()){
+    while ($post = $result->fetch_assoc()) {
         // print_r($post);
-        array_push($posts , $post);
+        array_push($posts, $post);
     }
 
     $posts_html = `<div class="p-5" >`;
 
-    foreach ($posts as $post){
-        $posts_html .= "<div > $post[user_id] : $post[text]  </div>";
+    foreach ($posts as $post) {
+        $posts_html .= "<div > $post[user_name] : $post[text]  </div>";
+        $posts_html .= " <div>_____________________________________</div>";
     }
-
-    
-
     $posts_html .= "</div>";
-    // print_r($posts);
-
     
-    // exit;
 } catch (Exception $e) {
     die(" SQL ERROR:    " .  $e->getMessage() . " " . $e->getCode());
 }
@@ -54,7 +75,11 @@ try {
 <html>
 
 <head>
-    <title>Home</title>
+    <title><?php if ($isShowProfile) : ?>
+            Home Page 
+        <?php else : ?>
+          <?= htmlspecialchars($user["name"])  ?>'s  Profile 
+        <?php endif; ?></title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./style/bootstrap.min.css">
     <link rel="stylesheet" href="./style/style.css">
@@ -62,8 +87,8 @@ try {
 
 <body>
 
-
-<?php if (isset($user)) : ?>
+    <!-- user homepage -->
+    <?php if (isset($user)) : ?>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand display fw-bold fs-2 text-primary px-2"> WELCOME <?= htmlspecialchars($user["name"])  ?></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +100,14 @@ try {
                 <ul class="navbar-nav">
 
                     <li class="nav-item active mx-2">
-                        <a class="nav-link btn btn-success px-5" href="#">Profile</a>
+                        <a href=<?php if (!$isShowProfile) : ?> ?action=profile <?php else : ?> ?action=home <?php endif; ?> class="nav-link btn btn-success px-5" href="#">
+                            <?php if ($isShowProfile) : ?>
+                                Home Page
+                            <?php else : ?>
+                                Profile
+                            <?php endif; ?>
+                        </a>
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link  btn bg-danger px-5 fs-6" href="logout.php">Log Out</a>
@@ -83,6 +115,7 @@ try {
                 </ul>
             </div>
         </nav>
+
 
 
         <!-- POSTING FORM -->
@@ -99,15 +132,15 @@ try {
         </div>
 
         <!-- POSTS -->
-        <div class="d-flex flex-column bg-danger justify-content-center align-items-center fs-1 gap-5">
+        <div class="container d-flex flex-column justify-content-center align-items-center fs-1 gap-5">
 
-        <?= ($posts_html)   ?>
+            <?= ($posts_html)   ?>
 
         </div>
 
     <?php else : ?>
 
-
+        <!-- home page without user -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand display fw-bold fs-2 px-2"> HEY LET'S LOG IN ?></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -32,7 +32,7 @@ try {
     echo '<script>alert("Login successfull");</script>';
     session_start();
     $_SESSION["user_id"] = $user["id"];
-
+    $_SESSION["user_name"] = $user["name"];
     echo '<script>window.location.href = "index.php";</script>';
     exit;
     // var_dump($user);
